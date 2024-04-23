@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MirrorGaussian: Reflecting 3D Gaussians for Reconstructing Mirror Reflections">
+  <meta name="keywords" content="MirrorGaussian">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MirrorGaussian: Reflecting 3D Gaussians for Reconstructing Mirror Reflections</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link href="static/css/twentytwenty.css" rel="stylesheet" type="text/css" />
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/video_comparison.js"></script>
+
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>        
+  
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+});
+</script>
+
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body", style="padding-bottom: 0rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span style="color: #63bad7;">Mirror</span>Gaussian: <span style="color: #DDA0DD;">Reflecting</span> 3D Gaussians for Reconstructing <span style="color: #63bad7;">Mirror</span> Reflections</h1>
+          <div class="is-size-5 publication-authors">
+            
+
+
+
+            <span class="author-block">
+              Jiayue Liu<sup>1*</sup>&nbsp;&nbsp;</span>
+            <span class="author-block">
+              Xiao Tang<sup>2*</sup>&nbsp;&nbsp;</span>
+            <span class="author-block">
+              Freeman Cheng<sup>3</sup>&nbsp;&nbsp;</span>
+            <!-- </span> -->
+            <span class="author-block">
+              Roy Yang<sup>2</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Zhihao Li<sup>2†</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Jianzhuang Liu<sup>4</sup>&nbsp;&nbsp;</span><br />
+            </span>
+            <span class="author-block">
+              Yi Huang<sup>4</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Jiaqi Lin<sup>1</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Shiyong Liu<sup>2</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Xiaofei Wu<sup>2</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Songcen Xu<sup>2</sup>&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              Chun Yuan<sup>1†</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block", style="color:#726f6f"><sup>1</sup>Tsinghua University&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block", style="color:#726f6f"><sup>2</sup>Huawei Noah's Ark Lab&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block", style="color:#726f6f"><sup>3</sup>University of Toronto&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block", style="color:#726f6f"><sup>4</sup>Chinese Academy of Sciences</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block", style="font-size: 15px;color:#726f6f">jy-liu22@mails.tsinghua.edu.cn&nbsp;&nbsp;</span>
+            <span class="author-block", style="font-size: 15px;color:#726f6f">tangxiao12@huawei.com&nbsp;&nbsp;</span>
+            <span class="author-block", style="font-size: 15px;color:#726f6f">zhihao.li@huawei.com&nbsp;&nbsp;</span>
+            <span class="author-block", style="font-size: 15px;color:#726f6f">yuanc@sz.tsinghua.edu.cn</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block", style="font-size: 15px;color:#726f6f"><sup>*&nbsp;</sup>Equal contribution&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block", style="font-size: 15px;color:#726f6f"><sup>†&nbsp;</sup>Corresponding authors </span>
+          </div>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block", style="color:#367DBD";>CVPR 2024</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Soon)</span>
+                  </a>
+              </span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-high-quality-coffee">
+          <video poster="" id="high-quality-coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/high-quality-coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-high-quality-three-scenes">
+          <video poster="" id="high-quality-three-scenes" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/high-quality-three-scenes.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-real_time_rendering">
+          <video poster="" id="real_time_rendering" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/real_time_rendering.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+  <div class="columns is-centered has-text-centered">
+  <p>
+    The first two video clips show the <strong><span style="color: #63bad7;">high-quality</span></strong> rendering results of our method on various datasets<br /> while the third demonstrates the <strong><span style="color: #DDA0DD;">real-time</span></strong> rendering performance of our method.
+  </p>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        3D Gaussian Splatting showcases notable advancements in photo-realistic and real-time novel view synthesis. However, it faces challenges in modeling mirror reflections, which exhibit substantial appearance variations from different viewpoints. To tackle this problem, we present MirrorGaussian, the first method for mirror scene reconstruction with real-time rendering based on 3D Gaussian Splatting. The key insight is grounded on the mirror symmetry between the real-world space and the virtual mirror space. We introduce an intuitive dual-rendering strategy that enables differentiable rasterization of both the real-world 3D Gaussians and the mirrored counterpart obtained by reflecting the former about the mirror plane. All 3D Gaussians are jointly optimized with the mirror plane in an end-to-end framework. MirrorGaussian achieves high-quality and real-time rendering in scenes with mirrors, empowering scene editing like adding new mirrors and objects. Comprehensive experiments on multiple datasets demonstrate that our approach significantly outperforms existing methods, achieving state-of-the-art results.
+      </p>
+    </div>
+  </section>
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <img alt="Architecture" src="./static/images/final_diagram_cropped.png" width="100%"/>
+    </div>
+  </div>
+  <div class="container is-max-desktop">
+    <div class="content has-text-justified">
+      <p><strong>Overview of MirrorGaussian.</strong> MirrorGaussian is grounded on the mirror symmetry between the real-world scene and its counterpart in the mirror. We first reflect the 3D Gaussians $P_r$ about the mirror plane $\mathcal{P}$ to obtain its mirrored counterpart $P_m$. Then, we rasterize $P_r$ to get the real-world image $I_r$ and the mirror mask $M$, and rasterize $P_m$ to get the mirror image $I_m$. The final image $I$ is composited by $I_r$ and $I_m$ using $M$. $I$ and $M$ are supervised by the captured image $I_{gt}$ and its annotated mirror mask $M_{gt}$, respectively. Note that for the sake of visual simplicity, $P_r$ and $P_m$ have been cropped.</p>
+    </div>
+  </div>
+  
+</section>
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h2 class="title is-3">Comparison With SOTA</h2>
+      <img alt="Architecture" src="./static/images/table.jpg" width="100%"/>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="content">
+      <div class="columns is-centered">
+        <div class="column is-one-third">
+          <div class="video-compare-container" id="materialsDiv1">
+            <video class="video" id="materials1" loop playsinline autoPlay muted src="./static/videos/32_9_Comparison_3DGS.mp4" onplay="resizeAndPlay(this)"></video>
+            <canvas height=0 class="videoMerge" id="materials1Merge" style="border-radius: 10px;"></canvas>
+          </div>
+        </div>
+
+        <div class="column is-one-third">
+          <div class="video-compare-container" id="materialsDiv2">
+            <video class="video" id="materials2" loop playsinline autoPlay muted src="./static/videos/32_9_Comparison_MS-NeRF.mp4" onplay="resizeAndPlay(this)"></video>
+            <canvas height=0 class="videoMerge" id="materials2Merge" style="border-radius: 10px;"></canvas>
+          </div>
+        </div>
+
+        <div class="column is-one-third">
+          <div class="video-compare-container" id="materialsDiv3">
+            <video class="video" id="materials3" loop playsinline autoPlay muted src="./static/videos/32_9_Comparison_Mirror-NeRF.mp4" onplay="resizeAndPlay(this)"></video>
+            <canvas height=0 class="videoMerge" id="materials3Merge" style="border-radius: 10px;"></canvas>
+          </div>
+        </div>
+      </div>
+      <p class="subtitle has-text-centered">
+        Please click the videos for better view.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="content">
+      <div class="columns is-centered">
+
+        <div class="column is-one-third has-text-centered">
+          <div class="twentytwenty-container twentytwenty-custom">
+            <img src="static/images/coffeehouse/VanillaGS.png" alt="Vanilla 3DGS"  >
+            <img src="static/images/coffeehouse/msnerf.png" alt="MS-NeRF"  >
+            
+            <img src="static/images/coffeehouse/MirrorGaussian.png" alt="MirrorGaussian"  >
+          </div>
+        </div>
+
+        <div class="column is-one-third has-text-centered">
+          <div class="twentytwenty-container twentytwenty-custom">
+            <img src="static/images/meetingroom/VanillaGS.png" alt="Vanilla 3DGS"  >
+            <img src="static/images/meetingroom/msnerf.png" alt="MS-NeRF"  >
+            
+            <img src="static/images/meetingroom/MirrorGaussian.png" alt="MirrorGaussian"  >
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="columns is-centered">
+
+        <div class="column is-one-third has-text-centered">
+            <div class="twentytwenty-container twentytwenty-custom">
+              <img src="static/images/lounge/VanillaGS.png" alt="Vanilla 3DGS"  >
+              <img src="static/images/lounge/msnerf.png" alt="MS-NeRF"  >
+            
+              <img src="static/images/lounge/MirrorGaussian.png" alt="MirrorGaussian"  >
+            </div>
+        </div>
+
+        <div class="column is-one-third has-text-centered">
+            <div class="twentytwenty-container twentytwenty-custom">
+              <img src="static/images/market/VanillaGS.png" alt="Vanilla 3DGS"  >  
+              <img src="static/images/market/msnerf.png" alt="MS-NeRF"  >
+                
+                <img src="static/images/market/MirrorGaussian.png" alt="MirrorGaussian"  >
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 
+<section class="section">
+  <div class="container hero-body">
+    <div class="columns is-multiline is-centered">
+      <div class="column is-one-quarter-desktop has-text-centered">
+          <div class="column is-one-quarter-desktop has-text-centered">
+              <div class="twentytwenty-container twentytwenty-custom">
+                  <img src="static/images/meetingroom/msnerf.png" alt="MS-NeRF"  >
+                  <img src="static/images/meetingroom/VanillaGS.png" alt="3DGS"  >
+                  <img src="static/images/meetingroom/MirrorGaussian.png" alt="MirrorGaussian"  >
+              </div>
+          </div>
+      </div>
+      <div class="column is-one-quarter-desktop has-text-centered">
+          <div class="column is-one-quarter-desktop has-text-centered">
+              <div class="twentytwenty-container twentytwenty-custom">
+              <img src="static/images/lounge/msnerf.png" alt="MS-NeRF"  >
+              <img src="static/images/lounge/VanillaGS.png" alt="3DGS"  >
+              <img src="static/images/lounge/MirrorGaussian.png" alt="MirrorGaussian"  >
+              </div>
+          </div>
+      </div>
+      <div class="column is-one-quarter-desktop has-text-centered">
+          <div class="column is-one-quarter-desktop has-text-centered">
+              <div class="twentytwenty-container twentytwenty-custom">
+                  <img src="static/images/market/msnerf.png" alt="MS-NeRF"  >
+                  <img src="static/images/market/VanillaGS.png" alt="3DGS"  >
+                  <img src="static/images/market/MirrorGaussian.png" alt="MirrorGaussian"  >
+              </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+  
+</section> -->
+
+
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h2 class="title is-3">Scene Editing</h2>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="content">
+      <div class="columns is-centered">
+        <div class="column is-one-third">
+          <div class="video-compare-container" id="materialsDiv1">
+            <video class="video" id="materials4" loop playsinline autoPlay muted src="./static/videos/add_bear.mp4" onplay="resizeAndPlay(this)"></video>
+            <canvas height=0 class="videoMerge" id="materials1Merge" style="border-radius: 10px;"></canvas>
+          </div>
+        </div>
+
+        <div class="column is-one-third">
+          <div class="video-compare-container" id="materialsDiv2">
+            <video class="video" id="materials5" loop playsinline autoPlay muted src="./static/videos/add_mirror.mp4" onplay="resizeAndPlay(this)"></video>
+            <canvas height=0 class="videoMerge" id="materials2Merge" style="border-radius: 10px;"></canvas>
+          </div>
+        </div>
+
+      </div>
+      <p class="subtitle has-text-centered">
+        Please click the videos for better view.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{liu2024mirror,
+  title     = {MirrorGaussian: Reflecting 3D Gaussians for Reconstructing Mirror Reflections},
+  author    = {Liu, Jiayue and Tang, Xiao and Cheng, Freeman and Yang, Roy and Li, Zhihao and Liu, Jianzhuang and Huang, Yi and Lin, Jiaqi and Liu, Shiyong and Wu, Xiaofei and Xu, Songcen and Yuan, Chun},
+  journal   = {arXiv preprint arXiv:2404.},
+  year      = {2024}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            We thank the authors of <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> that kindly open sourced the template of this website.
+            The html script of video comparison is borrowed from <a
+            href="https://dorverbin.github.io/refnerf/">Ref-NeRF</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="static/css/bootstrap.min.js"></script>
+<!-- <script src="/js/offcanvas.js"></script> -->
+<script src="static/css/jquery.event.move.js"></script>
+<script src="static/css/jquery.twentytwenty.js"></script>
+
+<script>
+  $(window).load(function(){$(".twentytwenty-container").twentytwenty({default_offset_pct: 0.5});});
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.video-compare-container').forEach(function (container, index) {
+      console.log("Index of the container:", index);
+      container.addEventListener('click', function () {
+        if (index === 0) {
+          this.classList.toggle('expand-right');
+        } else if (index === 2) {
+          this.classList.toggle('expand-left');
+        } else {
+          this.classList.toggle('expanded');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
